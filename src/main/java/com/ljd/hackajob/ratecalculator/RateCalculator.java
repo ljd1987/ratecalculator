@@ -1,5 +1,10 @@
 package com.ljd.hackajob.ratecalculator;
 
+/**
+ * 
+ * @author leodavison
+ *
+ */
 public class RateCalculator {
 
     public static void main(String[] args) {

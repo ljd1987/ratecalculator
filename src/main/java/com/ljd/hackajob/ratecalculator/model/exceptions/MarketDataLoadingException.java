@@ -1,5 +1,10 @@
 package com.ljd.hackajob.ratecalculator.model.exceptions;
 
+/**
+ * 
+ * @author leodavison
+ *
+ */
 public class MarketDataLoadingException extends RateCalculatorException {
     private static final long serialVersionUID = -1298505674015323993L;
 

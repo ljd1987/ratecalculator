@@ -1,5 +1,10 @@
 package com.ljd.hackajob.ratecalculator.model.exceptions;
 
+/**
+ * 
+ * @author leodavison
+ *
+ */
 public class ExceptionWrapper extends RuntimeException {
     private static final long serialVersionUID = -2525594160814749787L;
 

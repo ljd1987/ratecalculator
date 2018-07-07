@@ -2,6 +2,11 @@ package com.ljd.hackajob.ratecalculator.model;
 
 import java.math.BigDecimal;
 
+/**
+ * 
+ * @author leodavison
+ *
+ */
 public class LenderOffer {
     private final String lender;
     private final BigDecimal rate;
