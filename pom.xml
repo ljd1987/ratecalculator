@@ -3,7 +3,19 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.ljd.hackajob</groupId>
     <artifactId>ratecalculator</artifactId>
+    <name>ratecalculator</name>
+    <url>https://github.com/ljd1987/ratecalculator</url>
     <version>1.0.0</version>
+
+    <issueManagement>
+        <url>https://github.com/ljd1987/ratecalculator/issues</url>
+        <system>GitHub</system>
+    </issueManagement>
+
+    <ciManagement>
+        <system>Travis CI</system>
+        <url>https://travis-ci.org/ljd1987/ratecalculator</url>
+    </ciManagement>
 
     <dependencies>
         <dependency>
