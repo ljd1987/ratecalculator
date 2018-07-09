@@ -62,7 +62,7 @@ public class RateCalculatorTest {
         String loanRequest = "loads";
         String exptectedOutput = String.format("The loanAmount [%s] is not valid.%s",loanRequest,System.lineSeparator()); 
         
-        exit.expectSystemExitWithStatus(ExitCodes.INVALID_LOAN_AMOUNT);
+        exit.expectSystemExitWithStatus(ExitCodes.INVALID_LOAN_INPUT);
         exit.checkAssertionAfterwards(new Assertion() {
             @Override
             public void checkAssertion() throws Exception {

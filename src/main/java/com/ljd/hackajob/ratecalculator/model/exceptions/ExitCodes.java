@@ -16,4 +16,5 @@ public class ExitCodes {
     public static final int QUOTE_NOT_POSSIBLE      = 3;
     public static final int INVALID_USAGE           = 4;
     public static final int INVALID_LOAN_AMOUNT     = 5;
+    public static final int INVALID_LOAN_INPUT      = 6;
 }

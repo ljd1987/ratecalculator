@@ -16,7 +16,7 @@ public class LoanInputInvalidException extends RateCalculatorException {
 
     @Override
     public int getExitCode() {
-        return ExitCodes.INVALID_LOAN_AMOUNT;
+        return ExitCodes.INVALID_LOAN_INPUT;
     }
 
 }
