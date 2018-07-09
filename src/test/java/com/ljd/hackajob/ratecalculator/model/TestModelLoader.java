@@ -1,6 +1,5 @@
 package com.ljd.hackajob.ratecalculator.model;
 
-import static com.ljd.hackajob.ratecalculator.utils.TestUtils.RAND;
 import static com.ljd.hackajob.ratecalculator.utils.TestUtils.generateCSVFile;
 import static com.ljd.hackajob.ratecalculator.utils.TestUtils.generateLenderOffers;
 import static org.junit.Assert.assertEquals;
@@ -10,9 +9,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -22,36 +20,16 @@ import com.ljd.hackajob.ratecalculator.model.exceptions.MarketDataNotFoundExcept
 import com.ljd.hackajob.ratecalculator.model.exceptions.RateCalculatorException;
 
 public class TestModelLoader {
-    private String lenderName;
-    private double rate;
-    private double available;
-    private LenderOffer expected;
-    
-    private String inputLine;
     
     @Rule
     public ExpectedException exception = ExpectedException.none();
-    
-    @Before
-    public void beforeEach() {
-        lenderName = UUID.randomUUID().toString();
-        rate = RAND.nextDouble();
-        available = 10.0 + (RAND.nextDouble() * 1000);
-        expected = new LenderOffer(lenderName, rate, available);
-        inputLine = String.format("%s,%f,%f", lenderName, rate, available);
-    }
-    
-    @Test
-    public void testModelFromInputLine() {
-        LenderOffer actual = ModelLoader.lineToLenderOffer(inputLine);
-        assertEquals(expected, actual);
-    }
     
     @Test
     public void testLoadCSV() throws IOException, RateCalculatorException {
         List<LenderOffer> lenderOffers = generateLenderOffers(8);        
         File csvFile = generateCSVFile(lenderOffers);
-        
+                
+        lenderOffers = lenderOffers.stream().sorted((a,b)->a.getRate().compareTo(b.getRate())).collect(Collectors.toList());
         List<LenderOffer> loadedOffers = ModelLoader.loadMarketModelFromCSV(csvFile.getPath());        
         assertEquals(lenderOffers, loadedOffers);
     }

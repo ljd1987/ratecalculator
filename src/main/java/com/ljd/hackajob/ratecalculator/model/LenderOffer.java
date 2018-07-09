@@ -14,7 +14,7 @@ public class LenderOffer {
 
     public LenderOffer(String lender, double rate, double available) {
         this.lender = lender;
-        this.rate = BigDecimal.valueOf(rate).setScale(3, BigDecimal.ROUND_HALF_UP);
+        this.rate = BigDecimal.valueOf(rate);
         this.availalbe = BigDecimal.valueOf(available).setScale(2, BigDecimal.ROUND_HALF_UP);
     }
 
@@ -28,7 +28,7 @@ public class LenderOffer {
 
     public BigDecimal getAvailalbe() {
         return availalbe;
-    }
+    }        
 
     @Override
     public int hashCode() {

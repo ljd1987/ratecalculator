@@ -1,14 +1,14 @@
 package com.ljd.hackajob.ratecalculator.model;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.ljd.hackajob.ratecalculator.model.exceptions.ExceptionWrapper;
 import com.ljd.hackajob.ratecalculator.model.exceptions.MarketDataLoadingException;
@@ -23,24 +23,28 @@ import com.ljd.hackajob.ratecalculator.model.exceptions.RateCalculatorException;
 public class ModelLoader {
     private ModelLoader() {
         // not meant to be instantiated
-    }        
-
+    }
+    
     public static List<LenderOffer> loadMarketModelFromCSV(String filePath) throws RateCalculatorException  {
-        try (InputStream is=new FileInputStream(filePath);
-                InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
-                BufferedReader br = new BufferedReader(isr)) {
-            // line-by-line, skip the first line (header), map to a LenderOffer, collect into a List
-            return br.lines().skip(1).map(ModelLoader::lineToLenderOffer).collect(Collectors.toList());
-        } catch (FileNotFoundException e) {
+
+        try(Stream<String> lines = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8)) {
+            return lines
+                    .skip(1)
+                    .map(ModelLoader::lineToLenderOffer)
+                    .sorted((a,b)->a.getRate().compareTo(b.getRate()))
+                    .collect(Collectors.toList());
+        } catch (NoSuchFileException e) {
             throw new MarketDataNotFoundException(filePath);
-        } catch (IOException e) {
-            throw new MarketDataLoadingException(filePath);
+        } catch (IOException  e) {
+            throw new MarketDataLoadingException(e.getMessage());
+        } catch(UncheckedIOException e) {
+            throw new MarketDataLoadingException(e.getCause().getMessage());
         } catch (ExceptionWrapper e) {
             throw e.getException();
         }
     }
 
-    public static LenderOffer lineToLenderOffer(String line) {
+    private static LenderOffer lineToLenderOffer(String line) {
         String[] parts = line.split(",");
         try {
             return new LenderOffer(parts[0], Double.parseDouble(parts[1]), Double.parseDouble(parts[2]));

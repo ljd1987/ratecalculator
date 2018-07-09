@@ -32,7 +32,7 @@ public class TestLenderOffer {
     
     @Test
     public void testGetRate() {
-        assertEquals(BigDecimal.valueOf(rate).setScale(3, BigDecimal.ROUND_HALF_UP), offer.getRate());
+        assertEquals(BigDecimal.valueOf(rate), offer.getRate());
     }
     
     @Test
